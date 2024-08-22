@@ -37,21 +37,20 @@ function App() {
           </PublicLayout>
         }
       />
+      {/* Private Routes */}
       <Route
-        path="/patient-dashboard/*"
+        path="/patient-dashboard"
         element={
           <PrivateRoute>
-            <PatientDashboard>
-              <Routes>
-                <Route path="home" element={<Home />} />
-                <Route path="profile" element={<Profile />} />
-                <Route path="appointments" element={<Appointments />} />
-                <Route path="reports" element={<Reports />} />
-              </Routes>
-            </PatientDashboard>
+            <PatientDashboard />
           </PrivateRoute>
         }
-      />
+      >
+        <Route path="home" element={<Home />} />
+        <Route path="profile" element={<Profile />} />
+        <Route path="appointments" element={<Appointments />} />
+        <Route path="reports" element={<Reports />} />
+      </Route>
     </Routes>
   );
 }
