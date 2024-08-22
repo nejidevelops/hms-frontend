@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import PatientDashboard from "./components/PatientDashboard";
+import DoctorDashboard from "./components/DoctorDashboard"; // New import
 import PrivateRoute from './PrivateRoute';
 import Home from "./components/patients-dashboard/Home";
 import Profile from "./components/patients-dashboard/Profile";
@@ -37,7 +38,7 @@ function App() {
           </PublicLayout>
         }
       />
-      {/* Private Routes */}
+      {/* Private Routes for Patients */}
       <Route
         path="/patient-dashboard"
         element={
@@ -50,6 +51,18 @@ function App() {
         <Route path="profile" element={<Profile />} />
         <Route path="appointments" element={<Appointments />} />
         <Route path="reports" element={<Reports />} />
+      </Route>
+      {/* Private Routes for Doctors */}
+      <Route
+        path="/doctor-dashboard"
+        element={
+          <PrivateRoute>
+            <DoctorDashboard />
+          </PrivateRoute>
+        }
+      >
+        <Route path="home" element={<Home />} />
+        {/* Add doctor-specific routes here */}
       </Route>
     </Routes>
   );

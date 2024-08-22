@@ -8,8 +8,7 @@ export default function Login() {
     password: "",
   });
   const [message, setMessage] = useState("");
-  const [token, setToken] = useState(null); // Store token
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,38 +26,33 @@ export default function Login() {
         credentials
       );
       const { access, refresh } = response.data;
-      localStorage.setItem("accessToken", access); // Store the access token
-      localStorage.setItem("refreshToken", refresh); // Store the refresh token
-      setToken({ access, refresh }); // Update state
-      setMessage("Login successful!");
-      navigate('/patient-dashboard'); // Redirect to patient dashboard
+  
+      // Store tokens
+      localStorage.setItem("accessToken", access);
+      localStorage.setItem("refreshToken", refresh);
+  
+      // Fetch user profile to determine the role
+      const userResponse = await axios.get(
+        "https://hms-api-0pge.onrender.com/api/v1/users/me/",
+        { headers: { Authorization: `Bearer ${access}` } }
+      );
+      
+      const userRole = userResponse.data.role; // Assume role is in the 'role' field
+  
+      if (userRole === "patient") {
+        navigate("/patient-dashboard/home");
+      } else if (userRole === "doctor") {
+        navigate("/doctor-dashboard/home");
+      } else {
+        setMessage("Invalid role. Please contact support.");
+      }
     } catch (error) {
       console.error(error);
       setMessage("Invalid credentials. Please try again.");
     }
   };
-
-  const handleRefresh = async () => {
-    const refreshToken = localStorage.getItem("refreshToken");
-    if (!refreshToken) {
-      setMessage("No refresh token found. Please log in.");
-      return;
-    }
-    try {
-      const response = await axios.post(
-        "https://hms-api-0pge.onrender.com/api/token/refresh/",
-        { refresh: refreshToken }
-      );
-      const { access } = response.data;
-      localStorage.setItem("accessToken", access); // Update the access token
-      setToken({ ...token, access }); // Update state
-      console.log("New Access Token:", access);
-    } catch (error) {
-      console.error(error);
-      setMessage("Failed to refresh token. Please log in again.");
-    }
-  };
-
+  
+  
   return (
     <div className="max-w-md mx-auto mt-32 p-6 bg-white rounded-lg shadow-lg">
       <h2 className="text-2xl font-bold text-center mb-8">Login</h2>
