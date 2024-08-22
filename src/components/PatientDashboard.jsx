@@ -1,28 +1,49 @@
-import React from 'react';
+// src/components/PatientDashboard.jsx
+import { Outlet } from 'react-router-dom';
+import Sidebar from './patients-dashboard/Sidebar';
+import { FaUserCircle } from 'react-icons/fa';
+import { useState } from 'react';
 
-export default function PatientDashboard() {
+const PatientDashboard = () => {
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+
+  const handleLogout = () => {
+    // Clear token and redirect to login
+    localStorage.removeItem('accessToken');
+    window.location.href = '/login';
+  };
+
   return (
-    <div className="container mx-auto px-6 py-8">
-      <h1 className="text-3xl font-bold mb-6">Patient Dashboard</h1>
-      <p className="text-lg mb-4">Welcome to your dashboard. Here you can manage your appointments, view your medical history, and update your profile.</p>
-      
-      {/* Example sections */}
-      <div className="bg-white p-6 rounded-lg shadow-md mb-6">
-        <h2 className="text-xl font-semibold mb-4">Upcoming Appointments</h2>
-        <p>No upcoming appointments.</p>
-      </div>
-
-      <div className="bg-white p-6 rounded-lg shadow-md mb-6">
-        <h2 className="text-xl font-semibold mb-4">Medical History</h2>
-        <p>Your medical history is currently empty.</p>
-      </div>
-
-      <div className="bg-white p-6 rounded-lg shadow-md">
-        <h2 className="text-xl font-semibold mb-4">Profile Information</h2>
-        <p>First Name: [First Name]</p>
-        <p>Last Name: [Last Name]</p>
-        <p>Email: [Email]</p>
+    <div className="flex">
+      <Sidebar />
+      <div className="flex-1 ml-64">
+        <header className="bg-gray-800 text-white p-4 flex justify-between items-center">
+          <div className="text-2xl font-semibold">Patient Dashboard</div>
+          <div className="relative">
+            <button 
+              className="text-2xl"
+              onClick={() => setDropdownOpen(!isDropdownOpen)}
+            >
+              <FaUserCircle />
+            </button>
+            {isDropdownOpen && (
+              <div className="absolute right-0 mt-2 w-48 bg-white text-black rounded shadow-lg">
+                <button 
+                  className="block w-full px-4 py-2 hover:bg-gray-100"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
+              </div>
+            )}
+          </div>
+        </header>
+        <main className="p-6">
+          <Outlet />
+        </main>
       </div>
     </div>
   );
-}
+};
+
+export default PatientDashboard;
