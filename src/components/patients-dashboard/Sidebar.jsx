@@ -21,15 +21,6 @@ const Sidebar = () => {
           </li>
           <li>
             <NavLink 
-              to="/patient-dashboard/profile" 
-              className="flex items-center p-4 hover:bg-gray-700"
-              activeClassName="bg-gray-700"
-            >
-              <FaUser className="mr-3" /> Profile
-            </NavLink>
-          </li>
-          <li>
-            <NavLink 
               to="/patient-dashboard/appointments" 
               className="flex items-center p-4 hover:bg-gray-700"
               activeClassName="bg-gray-700"
@@ -44,6 +35,15 @@ const Sidebar = () => {
               activeClassName="bg-gray-700"
             >
               <FaFileAlt className="mr-3" /> Reports
+            </NavLink>
+          </li>
+          <li>
+            <NavLink 
+              to="/patient-dashboard/profile" 
+              className="flex items-center p-4 hover:bg-gray-700"
+              activeClassName="bg-gray-700"
+            >
+              <FaUser className="mr-3" /> Profile
             </NavLink>
           </li>
         </ul>
