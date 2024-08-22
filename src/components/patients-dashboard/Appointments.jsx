@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const Appointments = () => {
-  const [appointments, setAppointments] = useState([]); // Initialize as an empty array
+  const [appointments, setAppointments] = useState([]);
   const [newAppointment, setNewAppointment] = useState({
     patient_username: '',
     doctor_username: '',
@@ -11,20 +11,26 @@ const Appointments = () => {
     notes: '',
   });
 
+  // Dummy array of doctors
+  const doctors = [
+    { username: 'drsmith', first_name: 'John', last_name: 'Smith' },
+    { username: 'drjones', first_name: 'Emma', last_name: 'Jones' },
+    { username: 'drbrown', first_name: 'Michael', last_name: 'Brown' },
+  ];
+
   useEffect(() => {
     axios.get('https://hms-api-0pge.onrender.com/api/appointments/list/')
       .then(response => {
-        // Check if the response data is an array
         if (Array.isArray(response.data)) {
           setAppointments(response.data);
         } else {
           console.error('Unexpected response data:', response.data);
-          setAppointments([]); // Set to an empty array if response is not as expected
+          setAppointments([]);
         }
       })
       .catch(error => {
         console.error('Error fetching appointments:', error);
-        setAppointments([]); // Set to an empty array on error
+        setAppointments([]);
       });
   }, []);
 
@@ -75,15 +81,21 @@ const Appointments = () => {
       <h3 className="text-xl font-semibold mt-6">Create a New Appointment</h3>
       <form onSubmit={handleSubmit} className="mt-4">
         <div>
-          <label className="block mb-2">Doctor Username:</label>
-          <input
-            type="text"
+          <label className="block mb-2">Doctor:</label>
+          <select
             name="doctor_username"
             value={newAppointment.doctor_username}
             onChange={handleChange}
             className="border p-2 rounded w-full"
             required
-          />
+          >
+            <option value="" disabled>Select a doctor</option>
+            {doctors.map(doctor => (
+              <option key={doctor.username} value={doctor.username}>
+                {doctor.first_name} {doctor.last_name}
+              </option>
+            ))}
+          </select>
         </div>
         <div>
           <label className="block mb-2">Date:</label>
