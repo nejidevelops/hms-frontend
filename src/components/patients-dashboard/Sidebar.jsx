@@ -5,10 +5,10 @@ import { FaHome, FaUser, FaCalendarAlt, FaFileAlt, FaSignOutAlt } from 'react-ic
 const Sidebar = () => {
   return (
     <div className="bg-gray-800 text-white w-64 h-screen fixed top-0 left-0 flex flex-col">
-      <div className="p-4 text-center text-2xl font-semibold border-b border-gray-700">
+      {/* <div className="p-4 text-center text-2xl font-semibold border-b border-gray-700">
         Patient Dashboard
-      </div>
-      <nav className="flex-grow mt-6">
+      </div> */}
+      <nav className="flex-grow mt-12">
         <ul>
           <li>
             <NavLink 
