@@ -33,11 +33,11 @@ export default function Login() {
   
       // Fetch user profile to determine the role
       const userResponse = await axios.get(
-        "https://hms-api-0pge.onrender.com/api/v1/users/me/",
+        "https://hms-api-0pge.onrender.com/api/users/profile/",
         { headers: { Authorization: `Bearer ${access}` } }
       );
       
-      const userRole = userResponse.data.role; // Assume role is in the 'role' field
+      const userRole = userResponse.data.role;
   
       if (userRole === "patient") {
         navigate("/patient-dashboard/home");

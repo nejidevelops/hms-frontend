@@ -10,6 +10,9 @@ import Profile from "./components/patients-dashboard/Profile";
 import Appointments from "./components/patients-dashboard/Appointments";
 import Reports from "./components/patients-dashboard/Reports";
 import PublicLayout from './PublicLayout';
+import DoctorHome from "./components/doctors-dashboard/DoctorHome";
+import Patients from "./components/doctors-dashboard/Patients";
+import DoctorAppointments from "./components/doctors-dashboard/DoctorAppointments";
 
 function App() {
   return (
@@ -61,8 +64,9 @@ function App() {
           </PrivateRoute>
         }
       >
-        <Route path="home" element={<Home />} />
-        {/* Add doctor-specific routes here */}
+        <Route path="home" element={<DoctorHome />} />
+        <Route path="patients" element={<Patients />} />
+        <Route path="appointments" element={<DoctorAppointments />} />
       </Route>
     </Routes>
   );

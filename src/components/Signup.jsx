@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-export default function Signup() {
-  const navigate = useNavigate()
+function Signup() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
@@ -40,7 +40,7 @@ export default function Signup() {
         formData
       );
       setMessage("User registered successfully!");
-      navigate('/login')
+      navigate("/login");
       console.log(response.data);
     } catch (error) {
       console.error(error);
@@ -49,10 +49,10 @@ export default function Signup() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-32 p-6 bg-white rounded-lg shadow-lg">
+    <div className="max-w-2xl mx-auto mt-32 p-6 bg-white rounded-lg shadow-lg">
       <h2 className="text-2xl font-bold text-center mb-8">Register</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
+      <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
           <label className="block text-gray-700">First Name</label>
           <input
             type="text"
@@ -63,7 +63,7 @@ export default function Signup() {
             required
           />
         </div>
-        <div className="mb-4">
+        <div>
           <label className="block text-gray-700">Last Name</label>
           <input
             type="text"
@@ -74,7 +74,7 @@ export default function Signup() {
             required
           />
         </div>
-        <div className="mb-4">
+        <div>
           <label className="block text-gray-700">Username</label>
           <input
             type="text"
@@ -85,7 +85,7 @@ export default function Signup() {
             required
           />
         </div>
-        <div className="mb-4">
+        <div>
           <label className="block text-gray-700">Email</label>
           <input
             type="email"
@@ -96,7 +96,7 @@ export default function Signup() {
             required
           />
         </div>
-        <div className="mb-4">
+        <div>
           <label className="block text-gray-700">Phone Number</label>
           <input
             type="tel"
@@ -108,7 +108,7 @@ export default function Signup() {
             required
           />
         </div>
-        <div className="mb-4">
+        <div>
           <label className="block text-gray-700">Role</label>
           <select
             name="role"
@@ -122,18 +122,61 @@ export default function Signup() {
             <option value="patient">Patient</option>
           </select>
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700">Specialization</label>
-          <input
-            type="text"
-            name="specialization"
-            value={formData.specialization}
-            onChange={handleChange}
-            className="w-full mt-2 p-2 border rounded"
-            placeholder="Optional"
-          />
-        </div>
-        <div className="mb-4">
+
+        {/* Conditionally render fields based on the selected role */}
+        {formData.role === "doctor" && (
+          <>
+            <div>
+              <label className="block text-gray-700">Specialization</label>
+              <input
+                type="text"
+                name="specialization"
+                value={formData.specialization}
+                onChange={handleChange}
+                className="w-full mt-2 p-2 border rounded"
+                placeholder="Optional"
+              />
+            </div>
+            <div>
+              <label className="block text-gray-700">Availability</label>
+              <input
+                type="checkbox"
+                name="availability"
+                checked={formData.availability}
+                onChange={handleChange}
+                className="mt-2"
+              />
+            </div>
+          </>
+        )}
+
+        {formData.role === "patient" && (
+          <>
+            <div className="col-span-2">
+              <label className="block text-gray-700">Medical History</label>
+              <textarea
+                name="medical_history"
+                value={formData.medical_history}
+                onChange={handleChange}
+                className="w-full mt-2 p-2 border rounded"
+                placeholder="Optional"
+              ></textarea>
+            </div>
+            <div className="col-span-2">
+              <label className="block text-gray-700">Assigned Doctor</label>
+              <input
+                type="number"
+                name="assigned_doctor"
+                value={formData.assigned_doctor}
+                onChange={handleChange}
+                className="w-full mt-2 p-2 border rounded"
+                placeholder="Optional"
+              />
+            </div>
+          </>
+        )}
+
+        <div>
           <label className="block text-gray-700">Age</label>
           <input
             type="number"
@@ -144,17 +187,7 @@ export default function Signup() {
             placeholder="Optional"
           />
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700">Availability</label>
-          <input
-            type="checkbox"
-            name="availability"
-            checked={formData.availability}
-            onChange={handleChange}
-            className="mt-2"
-          />
-        </div>
-        <div className="mb-4">
+        <div>
           <label className="block text-gray-700">Gender</label>
           <select
             name="gender"
@@ -168,7 +201,7 @@ export default function Signup() {
             <option value="female">Female</option>
           </select>
         </div>
-        <div className="mb-4">
+        <div>
           <label className="block text-gray-700">Date of Birth</label>
           <input
             type="date"
@@ -179,28 +212,7 @@ export default function Signup() {
             placeholder="Optional"
           />
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700">Medical History</label>
-          <textarea
-            name="medical_history"
-            value={formData.medical_history}
-            onChange={handleChange}
-            className="w-full mt-2 p-2 border rounded"
-            placeholder="Optional"
-          ></textarea>
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700">Assigned Doctor</label>
-          <input
-            type="number"
-            name="assigned_doctor"
-            value={formData.assigned_doctor}
-            onChange={handleChange}
-            className="w-full mt-2 p-2 border rounded"
-            placeholder="Optional"
-          />
-        </div>
-        <div className="mb-4">
+        <div>
           <label className="block text-gray-700">Profile Image URL</label>
           <input
             type="url"
@@ -211,7 +223,7 @@ export default function Signup() {
             placeholder="Optional"
           />
         </div>
-        <div className="mb-4">
+        <div className="col-span-2">
           <label className="block text-gray-700">Password</label>
           <input
             type="password"
@@ -222,12 +234,14 @@ export default function Signup() {
             required
           />
         </div>
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition duration-300"
-        >
-          Register
-        </button>
+        <div className="col-span-2">
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition duration-300"
+          >
+            Register
+          </button>
+        </div>
       </form>
       {message && (
         <p className="mt-4 text-center text-red-500 font-semibold">{message}</p>
@@ -235,3 +249,5 @@ export default function Signup() {
     </div>
   );
 }
+
+export default Signup;
