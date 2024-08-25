@@ -12,7 +12,8 @@ const DoctorHeader = () => {
 
   const handleLogout = () => {
     // Add your logout logic here
-    console.log("Logout clicked");
+    localStorage.removeItem("accessToken"); // Assuming you're using a token-based system
+    window.location.href = "/login"; // Redirect to the login page after logout
   };
 
   return (
