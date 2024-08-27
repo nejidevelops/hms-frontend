@@ -184,7 +184,7 @@ function Signup() {
             value={formData.age}
             onChange={handleChange}
             className="w-full mt-2 p-2 border rounded"
-            placeholder="Optional"
+            // placeholder="Optional"
           />
         </div>
         <div>
