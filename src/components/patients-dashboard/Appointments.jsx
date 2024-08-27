@@ -11,6 +11,8 @@ const Appointments = () => {
     notes: '',
   });
 
+  const [currentUser, setCurrentUser] = useState(null);
+
   // Dummy array of doctors
   const doctors = [
     { username: 'drsmith', first_name: 'John', last_name: 'Smith' },
@@ -19,6 +21,24 @@ const Appointments = () => {
   ];
 
   useEffect(() => {
+    // Fetch current user's profile
+    axios.get('https://hms-api-0pge.onrender.com/api/users/profile/', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    })
+      .then(response => {
+        setCurrentUser(response.data.username);
+        setNewAppointment(prevState => ({
+          ...prevState,
+          patient_username: response.data.username,
+        }));
+      })
+      .catch(error => {
+        console.error('Error fetching user profile:', error);
+      });
+
+    // Fetch appointments
     axios.get('https://hms-api-0pge.onrender.com/api/appointments/list/')
       .then(response => {
         if (Array.isArray(response.data)) {
@@ -47,7 +67,7 @@ const Appointments = () => {
       .then(response => {
         setAppointments([...appointments, response.data]);
         setNewAppointment({
-          patient_username: '',
+          patient_username: currentUser || '',
           doctor_username: '',
           date: '',
           time: '',
@@ -80,6 +100,17 @@ const Appointments = () => {
 
       <h3 className="text-xl font-semibold mt-6">Create a New Appointment</h3>
       <form onSubmit={handleSubmit} className="mt-4">
+        <div>
+          <label className="block mb-2">Patient Username:</label>
+          <input
+            type="text"
+            name="patient_username"
+            value={newAppointment.patient_username}
+            onChange={handleChange}
+            className="border p-2 rounded w-full"
+            disabled // Disable the input to prevent modification
+          />
+        </div>
         <div>
           <label className="block mb-2">Doctor:</label>
           <select
