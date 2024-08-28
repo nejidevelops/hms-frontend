@@ -1,39 +1,27 @@
-import React, { useState } from "react";
-
-// Dummy Data
-const initialAppointments = [
-  {
-    id: 1,
-    patientName: "John Doe",
-    date: "2024-08-30",
-    time: "10:00 AM",
-    reason: "Routine Checkup",
-    status: "Pending",
-    details: "John has been experiencing mild headaches and fatigue.",
-  },
-  {
-    id: 2,
-    patientName: "Jane Smith",
-    date: "2024-08-31",
-    time: "11:30 AM",
-    reason: "Follow-up Visit",
-    status: "Confirmed",
-    details: "Jane is coming in for a follow-up on her recent surgery.",
-  },
-  {
-    id: 3,
-    patientName: "Michael Johnson",
-    date: "2024-09-01",
-    time: "02:00 PM",
-    reason: "Blood Test",
-    status: "Cancelled",
-    details: "Michael needs to take a blood test as part of his annual checkup.",
-  },
-];
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const DoctorAppointments = () => {
-  const [appointments, setAppointments] = useState(initialAppointments);
+  const [appointments, setAppointments] = useState([]);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
+
+  // Fetch appointments for the logged-in doctor
+  useEffect(() => {
+    const fetchAppointments = async () => {
+      try {
+        const response = await axios.get("https://hms-api-0pge.onrender.com/api/appointments/list/", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        });
+        setAppointments(response.data);
+      } catch (error) {
+        console.error("Error fetching appointments:", error);
+      }
+    };
+
+    fetchAppointments();
+  }, []);
 
   const handleViewDetails = (appointment) => {
     setSelectedAppointment(appointment);
@@ -84,7 +72,7 @@ const DoctorAppointments = () => {
             {appointments.map((appointment) => (
               <tr key={appointment.id} className="hover:bg-gray-50">
                 <td className="px-4 py-2 border-b border-gray-200">
-                  {appointment.patientName}
+                  {`${appointment.patient.first_name} ${appointment.patient.last_name}`}
                 </td>
                 <td className="px-4 py-2 border-b border-gray-200">
                   {appointment.date}
@@ -93,7 +81,7 @@ const DoctorAppointments = () => {
                   {appointment.time}
                 </td>
                 <td className="px-4 py-2 border-b border-gray-200">
-                  {appointment.reason}
+                  {appointment.notes || "N/A"}
                 </td>
                 <td
                   className={`px-4 py-2 border-b border-gray-200 ${
@@ -139,12 +127,11 @@ const DoctorAppointments = () => {
         <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
           <div className="bg-white rounded-lg p-6 w-1/2">
             <h3 className="text-2xl font-semibold mb-4">Appointment Details</h3>
-            <p><strong>Patient Name:</strong> {selectedAppointment.patientName}</p>
+            <p><strong>Patient Name:</strong> {`${selectedAppointment.patient.first_name} ${selectedAppointment.patient.last_name}`}</p>
             <p><strong>Date:</strong> {selectedAppointment.date}</p>
             <p><strong>Time:</strong> {selectedAppointment.time}</p>
-            <p><strong>Reason:</strong> {selectedAppointment.reason}</p>
+            <p><strong>Reason:</strong> {selectedAppointment.notes || "N/A"}</p>
             <p><strong>Status:</strong> {selectedAppointment.status}</p>
-            <p><strong>Details:</strong> {selectedAppointment.details}</p>
             <div className="mt-6 text-right">
               <button
                 onClick={() => setSelectedAppointment(null)}
