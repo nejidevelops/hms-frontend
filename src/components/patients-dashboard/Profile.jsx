@@ -18,6 +18,7 @@ const Profile = () => {
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
   useEffect(() => {
     // Fetch profile data on component mount
@@ -47,10 +48,30 @@ const Profile = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle profile update logic here
-    console.log('Profile updated:', profile);
+    setLoading(true);
+    setError('');
+    setSuccess('');
+
+    try {
+      const response = await axios.patch(
+        'https://hms-api-0pge.onrender.com/api/users/profile/update/',
+        profile,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      setSuccess('Profile updated successfully.');
+    } catch (err) {
+      console.error(err);
+      setError('Failed to update profile. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (loading) return <div>Loading...</div>;
@@ -59,6 +80,9 @@ const Profile = () => {
   return (
     <div className="p-4 bg-white shadow rounded-lg">
       <h2 className="text-2xl font-semibold mb-4">Profile</h2>
+
+      {success && <div className="text-green-500 mb-4">{success}</div>}
+      {error && <div className="text-red-500 mb-4">{error}</div>}
 
       <div className="mb-4">
         <label className="block text-gray-700">Profile Image:</label>
