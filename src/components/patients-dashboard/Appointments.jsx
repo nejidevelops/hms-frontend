@@ -9,16 +9,11 @@ const Appointments = () => {
     date: '',
     time: '',
     notes: '',
+    status: 'pending'
   });
 
   const [currentUser, setCurrentUser] = useState(null);
-
-  // Dummy array of doctors
-  const doctors = [
-    { username: 'drsmith', first_name: 'John', last_name: 'Smith' },
-    { username: 'drjones', first_name: 'Emma', last_name: 'Jones' },
-    { username: 'drbrown', first_name: 'Michael', last_name: 'Brown' },
-  ];
+  const [doctors, setDoctors] = useState([]); // State to hold doctors
 
   useEffect(() => {
     // Fetch current user's profile
@@ -36,6 +31,25 @@ const Appointments = () => {
       })
       .catch(error => {
         console.error('Error fetching user profile:', error);
+      });
+
+    // Fetch doctors
+    axios.get('https://hms-api-0pge.onrender.com/api/users/list/doctors/', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    })
+      .then(response => {
+        if (Array.isArray(response.data)) {
+          setDoctors(response.data); // Set the fetched doctors
+        } else {
+          console.error('Unexpected response data for doctors:', response.data);
+          setDoctors([]);
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching doctors:', error);
+        setDoctors([]);
       });
 
     // Fetch appointments
@@ -72,12 +86,13 @@ const Appointments = () => {
           date: '',
           time: '',
           notes: '',
+          status: 'pending' // Reset status to default
         });
       })
       .catch(error => {
         console.error('Error creating appointment:', error);
       });
-  };
+  };  
 
   return (
     <div>
