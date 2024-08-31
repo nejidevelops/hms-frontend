@@ -53,7 +53,11 @@ const Appointments = () => {
       });
 
     // Fetch appointments
-    axios.get('https://hms-api-0pge.onrender.com/api/appointments/list/')
+    axios.get('https://hms-api-0pge.onrender.com/api/appointments/list/', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    })
       .then(response => {
         if (Array.isArray(response.data)) {
           setAppointments(response.data);
