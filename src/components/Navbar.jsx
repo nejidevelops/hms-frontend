@@ -1,34 +1,53 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { FaBars, FaTimes } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleNavigation = (hash) => {
+    navigate(`/#${hash}`);
   };
 
   return (
     <nav className="bg-white shadow-md fixed top-0 w-full z-50">
       <div className="container mx-auto px-6 py-4 flex justify-between items-center">
         <div className="text-2xl font-bold text-blue-500">
-          <a href="#hero">HMS</a> {/* Replace with your logo */}
+          <button onClick={() => handleNavigation("hero")}>
+            Doldam Hospital
+          </button>
         </div>
         <div className="hidden md:flex space-x-8">
-          <a href="#features" className="text-gray-800 hover:text-blue-500">
+          <button
+            onClick={() => handleNavigation("features")}
+            className="text-gray-800 hover:text-blue-500"
+          >
             Features
-          </a>
-          <a href="#testimonials" className="text-gray-800 hover:text-blue-500">
+          </button>
+          <button
+            onClick={() => handleNavigation("testimonials")}
+            className="text-gray-800 hover:text-blue-500"
+          >
             Testimonials
-          </a>
-          <a href="#how-it-works" className="text-gray-800 hover:text-blue-500">
+          </button>
+          <button
+            onClick={() => handleNavigation("how-it-works")}
+            className="text-gray-800 hover:text-blue-500"
+          >
             How It Works
-          </a>
-          <a href="#contact" className="text-gray-800 hover:text-blue-500">
+          </button>
+          <button
+            onClick={() => handleNavigation("contact")}
+            className="text-gray-800 hover:text-blue-500"
+          >
             Contact
-          </a>
+          </button>
         </div>
         <div className="hidden md:flex gap-4">
           <Link
@@ -58,36 +77,42 @@ export default function Navbar() {
           className="md:hidden bg-white"
         >
           <div className="px-6 pb-4 flex flex-col space-y-4">
-            <a href="#features" className="text-gray-800 hover:text-blue-500">
+            <button
+              onClick={() => handleNavigation("features")}
+              className="text-gray-800 hover:text-blue-500"
+            >
               Features
-            </a>
-            <a
-              href="#testimonials"
+            </button>
+            <button
+              onClick={() => handleNavigation("testimonials")}
               className="text-gray-800 hover:text-blue-500"
             >
               Testimonials
-            </a>
-            <a
-              href="#how-it-works"
+            </button>
+            <button
+              onClick={() => handleNavigation("how-it-works")}
               className="text-gray-800 hover:text-blue-500"
             >
               How It Works
-            </a>
-            <a href="#contact" className="text-gray-800 hover:text-blue-500">
+            </button>
+            <button
+              onClick={() => handleNavigation("contact")}
+              className="text-gray-800 hover:text-blue-500"
+            >
               Contact
-            </a>
+            </button>
             <Link
-            to="/signup"
-            className="bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600 transition duration-300"
-          >
-            Get Started
-          </Link>
-          <Link
-            to="/login"
-            className="bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600 transition duration-300"
-          >
-            Login
-          </Link>
+              to="/signup"
+              className="bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600 transition duration-300"
+            >
+              Get Started
+            </Link>
+            <Link
+              to="/login"
+              className="bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600 transition duration-300"
+            >
+              Login
+            </Link>
           </div>
         </motion.div>
       )}

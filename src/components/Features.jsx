@@ -1,8 +1,8 @@
 import { FaUserMd, FaCalendarCheck, FaChartLine } from "react-icons/fa";
 
-export default function Features() {
+export default function Features({ id }) {
   return (
-    <section id="features" className="py-16 bg-gray-100">
+    <section id={id} className="py-16 bg-gray-100">
       <div className="container mx-auto px-6">
         <h2 className="text-3xl lg:text-4xl font-extrabold text-center mb-12 text-gray-800">
           Key Features

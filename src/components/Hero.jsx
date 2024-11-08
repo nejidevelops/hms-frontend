@@ -1,17 +1,23 @@
 import { motion } from "framer-motion";
+import doctors from "./hospital.jpeg";
 
-export default function Hero() {
+export default function Hero({ id }) {
   return (
-    <section id="hero" className="relative bg-gradient-to-r from-blue-500 to-green-500 text-white h-screen flex">
+    <section
+      id={id}
+      className="relative bg-gradient-to-r from-blue-600 to-teal-600 text-white h-screen flex items-center"
+    >
       {/* Background Decorative Elements */}
-      {/* <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
-        <div className="absolute top-0 left-0 w-1/2 h-full bg-gradient-to-r from-blue-900 to-transparent opacity-50"></div>
-        <div className="absolute bottom-0 right-0 w-1/3 h-1/3 bg-gradient-to-t from-green-600 to-transparent opacity-50 rounded-full transform translate-x-1/2 translate-y-1/2"></div>
-      </div> */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
+        <div className="absolute top-0 left-0 w-1/2 h-full bg-gradient-to-r from-blue-900 to-transparent opacity-40"></div>
+        <div className="absolute bottom-0 right-0 w-1/4 h-1/4 bg-gradient-to-t from-green-500 to-transparent opacity-50 rounded-full transform translate-x-1/2 translate-y-1/2"></div>
+        <div className="absolute top-10 right-20 w-16 h-16 bg-blue-400 opacity-20 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 left-20 w-24 h-24 bg-teal-400 opacity-20 rounded-full blur-3xl"></div>
+      </div>
 
       <div className="container mx-auto px-6 relative z-10 flex flex-col md:flex-row items-center justify-between">
         {/* Text Content */}
-        <div className="text-center md:text-left md:w-1/2">
+        <div className="text-center md:text-left md:w-1/2 space-y-4">
           <motion.h1
             className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-4"
             initial={{ opacity: 0, y: -50 }}
@@ -21,22 +27,33 @@ export default function Hero() {
             Revolutionize Your Hospital Management
           </motion.h1>
           <motion.p
-            className="text-lg md:text-xl lg:text-2xl mb-8 font-light leading-relaxed"
+            className="text-lg md:text-xl lg:text-2xl mb-8 font-light leading-relaxed max-w-md"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.5 }}
           >
-            Streamline operations and enhance patient care with our cutting-edge system.
+            Streamline operations and enhance patient care with our all-in-one
+            hospital management solution.
           </motion.p>
-          <motion.a
-            href="#features"
-            className="inline-block bg-white text-blue-500 px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:bg-gray-100 transition duration-300"
+          <motion.div
+            className="flex flex-col md:flex-row items-center gap-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 1 }}
           >
-            Discover Features
-          </motion.a>
+            <a
+              href="#features"
+              className="bg-white text-blue-600 px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:bg-gray-100 transition duration-300"
+            >
+              Discover Features
+            </a>
+            <a
+              href="#demo"
+              className="bg-teal-500 px-8 py-4 rounded-full font-semibold text-lg text-white shadow-lg hover:bg-teal-600 transition duration-300"
+            >
+              Watch a Demo
+            </a>
+          </motion.div>
         </div>
 
         {/* Image Content */}
@@ -47,9 +64,9 @@ export default function Hero() {
           transition={{ duration: 1, delay: 0.5 }}
         >
           <img
-            src="https://images.pexels.com/photos/249348/pexels-photo-249348.jpeg?auto=compress&cs=tinysrgb&w=600"
+            src={doctors}
             alt="Hospital Management"
-            className="w-full rounded-lg shadow-2xl"
+            className="w-full rounded-lg shadow-2xl hover:shadow-3xl transition-shadow duration-300 transform hover:scale-105"
           />
         </motion.div>
       </div>

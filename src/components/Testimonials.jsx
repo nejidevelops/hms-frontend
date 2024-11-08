@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 
-export default function Testimonials() {
+export default function Testimonials({ id }) {
   return (
-    <section id="testimonials" className="py-16 bg-white">
+    <section id={id} className="py-16 bg-white">
       <div className="container mx-auto px-6">
         <h2 className="text-3xl lg:text-4xl font-extrabold text-center mb-12 text-gray-800">
           What Our Users Say
