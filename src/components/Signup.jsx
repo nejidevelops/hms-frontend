@@ -12,7 +12,7 @@ function Signup() {
     phone_number: "",
     role: "",
     specialization: "",
-    age: "",
+    // age: "",
     availability: false,
     gender: "",
     date_of_birth: "",
@@ -51,7 +51,10 @@ function Signup() {
   return (
     <div className="max-w-2xl mx-auto mt-32 p-6 bg-white rounded-lg shadow-lg">
       <h2 className="text-2xl font-bold text-center mb-8">Register</h2>
-      <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <form
+        onSubmit={handleSubmit}
+        className="grid grid-cols-1 md:grid-cols-2 gap-6"
+      >
         <div>
           <label className="block text-gray-700">First Name</label>
           <input
@@ -128,14 +131,24 @@ function Signup() {
           <>
             <div>
               <label className="block text-gray-700">Specialization</label>
-              <input
-                type="text"
+              <select
                 name="specialization"
                 value={formData.specialization}
                 onChange={handleChange}
                 className="w-full mt-2 p-2 border rounded"
-                placeholder="Optional"
-              />
+                required
+              >
+                <option value="">Select Specialization</option>
+                <option value="Cardiology">Cardiology</option>
+                <option value="Neurology">Neurology</option>
+                <option value="Pediatrics">Pediatrics</option>
+                <option value="Orthopedics">Orthopedics</option>
+                <option value="Dermatology">Dermatology</option>
+                <option value="Radiology">Radiology</option>
+                <option value="Oncology">Oncology</option>
+                <option value="Psychiatry">Psychiatry</option>
+                <option value="General Practice">General Practice</option>
+              </select>
             </div>
             <div>
               <label className="block text-gray-700">Availability</label>
@@ -162,7 +175,7 @@ function Signup() {
                 placeholder="Optional"
               ></textarea>
             </div>
-            <div className="col-span-2">
+            {/* <div className="col-span-2">
               <label className="block text-gray-700">Assigned Doctor</label>
               <input
                 type="number"
@@ -172,11 +185,11 @@ function Signup() {
                 className="w-full mt-2 p-2 border rounded"
                 placeholder="Optional"
               />
-            </div>
+            </div> */}
           </>
         )}
 
-        <div>
+        {/* <div>
           <label className="block text-gray-700">Age</label>
           <input
             type="number"
@@ -184,9 +197,8 @@ function Signup() {
             value={formData.age}
             onChange={handleChange}
             className="w-full mt-2 p-2 border rounded"
-            // placeholder="Optional"
           />
-        </div>
+        </div> */}
         <div>
           <label className="block text-gray-700">Gender</label>
           <select
@@ -212,7 +224,7 @@ function Signup() {
             placeholder="Optional"
           />
         </div>
-        <div>
+        {/* <div>
           <label className="block text-gray-700">Profile Image URL</label>
           <input
             type="url"
@@ -222,7 +234,7 @@ function Signup() {
             className="w-full mt-2 p-2 border rounded"
             placeholder="Optional"
           />
-        </div>
+        </div> */}
         <div className="col-span-2">
           <label className="block text-gray-700">Password</label>
           <input

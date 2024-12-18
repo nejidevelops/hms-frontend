@@ -90,11 +90,45 @@ function Home() {
                   <strong className="text-blue-600">Notes:</strong>{" "}
                   {appointment.notes || "No notes available"}
                 </p>
+                {appointment.status === "accepted" &&
+                  appointment.drug_prescription && (
+                    <div className="mt-6 bg-white rounded-lg shadow-md p-4 border border-gray-200">
+                      <div className="flex items-center mb-4">
+                        <div className="bg-blue-500 text-white rounded-full w-8 h-8 flex justify-center items-center">
+                          💊
+                        </div>
+                        <p className="ml-3 text-lg font-semibold text-gray-800">
+                          Drug Prescription
+                        </p>
+                      </div>
+                      <div className="bg-blue-50 rounded-lg p-3">
+                        <ul className="space-y-2">
+                          {Object.entries(appointment.drug_prescription).map(
+                            ([drug, dosage]) => (
+                              <li
+                                key={drug}
+                                className="flex justify-between items-center bg-white rounded-md p-3 shadow-sm border border-gray-300"
+                              >
+                                <span className="text-gray-700 font-medium">
+                                  {drug}
+                                </span>
+                                <span className="bg-blue-100 text-blue-600 px-2 py-1 rounded-md text-sm font-semibold">
+                                  {dosage}
+                                </span>
+                              </li>
+                            )
+                          )}
+                        </ul>
+                      </div>
+                    </div>
+                  )}
               </div>
             ))}
           </div>
         ) : (
-          <p className="text-center text-gray-500">No upcoming appointments.</p>
+          <p className="text-gray-600 text-center italic">
+            No appointments available at the moment.
+          </p>
         )}
       </div>
 

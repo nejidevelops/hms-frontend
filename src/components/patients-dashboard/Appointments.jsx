@@ -60,6 +60,7 @@ const Appointments = () => {
     })
       .then(response => {
         if (Array.isArray(response.data)) {
+          console.log(response.data)
           setAppointments(response.data);
         } else {
           console.error('Unexpected response data:', response.data);

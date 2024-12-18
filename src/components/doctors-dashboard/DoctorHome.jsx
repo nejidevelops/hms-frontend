@@ -24,9 +24,9 @@ const DoctorHome = () => {
           <div>
             <h2 className="text-xl font-semibold">Upcoming Appointments</h2>
             <p className="text-gray-600">Keep track of your upcoming appointments.</p>
-            <Link to="/doctor-dashboard/upcoming" className="text-green-600 hover:underline">
+            {/* <Link to="/doctor-dashboard/upcoming" className="text-green-600 hover:underline">
               View Upcoming
-            </Link>
+            </Link> */}
           </div>
         </div>
 

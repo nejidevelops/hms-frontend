@@ -17,14 +17,14 @@ const DoctorSidebar = () => {
           <FaHome className="mr-2" />
           Home
         </NavLink>
-        <NavLink
+        {/* <NavLink
           to="/doctor-dashboard/patients"
           className="flex items-center p-3 hover:bg-gray-700"
           activeClassName="bg-gray-700"
         >
           <FaUserMd className="mr-2" />
           Patients
-        </NavLink>
+        </NavLink> */}
         <NavLink
           to="/doctor-dashboard/appointments"
           className="flex items-center p-3 hover:bg-gray-700"
